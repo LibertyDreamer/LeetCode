@@ -25,13 +25,13 @@ Constraints:
 class Solution {
 public:
     int fib(int n) {
-        int memoize[n+2];
+        int memoize[2];
         memoize[0] = 0;
         memoize[1] = 1;
         for(int i = 2; i <= n; ++i)
         {
-            memoize[i] = memoize[i-1] + memoize[i-2];
+            memoize[i%2] = memoize[0] + memoize[1];
         }
-        return memoize[n];
+        return memoize[n%2];
     }
 };
