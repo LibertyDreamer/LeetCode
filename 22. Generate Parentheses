@@ -23,11 +23,12 @@ Constraints:
 
 */
 
-
 class Solution {
-    void backtrack(std::stack<std::string>& parenthesis_stack,
-                   std::vector<std::string>& solution, int open, int closed,
-                   const int& n) {
+    std::stack<std::string> parenthesis_stack;
+    std::vector<std::string> solution;
+    int n;
+
+    void backtrack(int open, int closed) {
 
         std::string parhenthesis = parenthesis_stack.top();
         parenthesis_stack.pop();
@@ -39,12 +40,12 @@ class Solution {
 
         if (open > closed) {
             parenthesis_stack.push(parhenthesis + ")");
-            backtrack(parenthesis_stack, solution, open, closed + 1, n);
+            backtrack(open, closed + 1);
         }
 
         if (open < n) {
             parenthesis_stack.push(parhenthesis + "(");
-            backtrack(parenthesis_stack, solution, open + 1, closed, n);
+            backtrack(open + 1, closed);
         }
     }
 
@@ -52,12 +53,11 @@ public:
     vector<string> generateParenthesis(int n) {
         if (n == 1)
             return {"()"};
+        this->n = n;
 
-        std::stack<std::string> parenthesis_stack;
         parenthesis_stack.push("(");
-        std::vector<std::string> solution;
 
-        backtrack(parenthesis_stack, solution, 1, 0, n);
+        backtrack(1, 0);
 
         return solution;
     }
