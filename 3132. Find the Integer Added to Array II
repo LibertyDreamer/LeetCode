@@ -46,7 +46,7 @@ class Solution {
 public:
     int minimumAddedInteger(vector<int>& nums1, vector<int>& nums2) {
         int solution = 0;
-        std::map<int, int> hash_nums1,hash_nums2;
+        std::map<int, int> hash_nums1, hash_nums2;
 
         for (int i = 0; i < nums2.size(); ++i) {
             hash_nums2[nums2[i]]++;
@@ -55,30 +55,22 @@ public:
         hash_nums1[nums1[nums1.size() - 1]]++;
         hash_nums1[nums1[nums1.size() - 2]]++;
 
-        int min1 = hash_nums2.begin()->first - hash_nums1.begin()->first;
-        int min2 = hash_nums2.begin()->first - (++hash_nums1.begin())->first;
-        int min3 = hash_nums2.begin()->first - (++ ++hash_nums1.begin())->first;
+        int min[3] = {hash_nums2.begin()->first - hash_nums1.begin()->first,
+                      hash_nums2.begin()->first - (++hash_nums1.begin())->first,
+                      hash_nums2.begin()->first -
+                          (++ ++hash_nums1.begin())->first};
+        std::sort(min, min + 3);
 
-        for (auto it = hash_nums2.begin(); it != hash_nums2.end(); ++it) {
-            if (hash_nums1[it->first + (min1 * -1)] >= it->second) continue;
-            min1 = INT_MAX;
-            break;
+        for (int i = 0; i < 3; ++i) {
+            for (auto it = hash_nums2.begin(); it != hash_nums2.end(); ++it) {
+                if (hash_nums1[it->first + (min[i] * -1)] >= it->second)
+                    continue;
+                min[i] = INT_MAX;
+                break;
+            }
+            if(min[i] != INT_MAX) return min[i];
         }
 
-        for (auto it = hash_nums2.begin(); it != hash_nums2.end(); ++it) {
-            if (hash_nums1[it->first + (min2 * -1)] >= it->second)
-                continue;
-            min2 = INT_MAX;
-            break;
-        }
-
-        for (auto it = hash_nums2.begin(); it != hash_nums2.end(); ++it) {
-            if (hash_nums1[it->first + (min3 * -1)] >= it->second)
-                continue;
-            min3 = INT_MAX;
-            break;
-        }
-
-        return std::min({min1, min2, min3});
+        return std::min({min[0], min[1], min[2]});
     }
 };
