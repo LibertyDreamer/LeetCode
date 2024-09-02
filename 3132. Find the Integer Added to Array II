@@ -71,6 +71,6 @@ public:
             if(min[i] != INT_MAX) return min[i];
         }
 
-        return std::min({min[0], min[1], min[2]});
+        return 0; //err
     }
 };
