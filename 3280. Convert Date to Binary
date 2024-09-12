@@ -1,0 +1,84 @@
+/*
+You are given a string date representing a Gregorian calendar date in the yyyy-mm-dd format.
+
+date can be written in its binary representation obtained by converting year, month, and day to their binary representations without any leading zeroes and writing them down in year-month-day format.
+
+Return the binary representation of date.
+
+ 
+
+Example 1:
+
+Input: date = "2080-02-29"
+
+Output: "100000100000-10-11101"
+
+Explanation:
+
+100000100000, 10, and 11101 are the binary representations of 2080, 02, and 29 respectively.
+
+Example 2:
+
+Input: date = "1900-01-01"
+
+Output: "11101101100-1-1"
+
+Explanation:
+
+11101101100, 1, and 1 are the binary representations of 1900, 1, and 1 respectively.
+
+ 
+
+Constraints:
+
+    date.length == 10
+    date[4] == date[7] == '-', and all other date[i]'s are digits.
+    The input is generated such that date represents a valid Gregorian calendar date between Jan 1st, 1900 and Dec 31st, 2100 (both inclusive).
+
+*/
+
+class Solution {
+public:
+    string convertDateToBinary(string date) {
+        uint year_month_day[3] = {}; 
+        int index = 0;
+        for(int i = 0; i < date.size(); ++i)
+        {
+            if(date[i] == '-')
+            {
+                index++;
+                continue;
+            }
+
+            year_month_day[index] = (year_month_day[index]*10) + (date[i] - '0');
+            
+        } 
+
+        std::string solution;
+        for(int i = 0; i < 3; ++i)
+        {
+            int mask = 1;
+            std::cout << year_month_day[i] << std::endl;
+            std::string pre_solution;
+            while(mask <= year_month_day[i])
+            {   
+
+                if(year_month_day[i] & mask)
+                {
+                    pre_solution = '1' + pre_solution;
+                }
+                else
+                {
+                    pre_solution = '0' + pre_solution;
+                }
+                mask <<= 1;
+                
+            }
+            solution += pre_solution + '-';
+           
+        } 
+        solution.pop_back();
+
+        return solution;
+    }
+};
