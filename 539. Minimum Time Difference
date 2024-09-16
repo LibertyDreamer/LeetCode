@@ -1,0 +1,57 @@
+/*
+Given a list of 24-hour clock time points in "HH:MM" format, return the minimum minutes difference between any two time-points in the list.
+
+ 
+
+Example 1:
+
+Input: timePoints = ["23:59","00:00"]
+Output: 1
+
+Example 2:
+
+Input: timePoints = ["00:00","23:59","00:00"]
+Output: 0
+
+ 
+
+Constraints:
+
+    2 <= timePoints.length <= 2 * 104
+    timePoints[i] is in the format "HH:MM".
+*/
+
+class Solution {
+public:
+    int findMinDifference(vector<string>& timePoints) {
+        uint8_t minutes[1440] = {};
+
+        for (const string& it : timePoints)
+            if (minutes[((it[0] - '0') * 10 + (it[1] - '0')) * 60 +
+                        ((it[3] - '0') * 10 + (it[4] - '0'))]++ == 1)
+                return 0;
+
+        int solution = INT_MAX;
+        int first;
+        for (int i = 0; i < 1440; ++i) {
+            if (!minutes[i])
+                continue;
+
+            first = i;
+            break;
+        }
+
+        int first_elem = first;
+        for (int i = first+1; i < 1440; ++i) {
+            if (!minutes[i])
+                continue;
+            solution = std::min(i-first, solution);
+            first = i;
+        }
+
+        int& end_elem = first;
+        solution = std::min(1440 - (end_elem - first_elem), solution);
+
+        return solution;
+    }
+};
