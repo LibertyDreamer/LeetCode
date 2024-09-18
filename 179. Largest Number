@@ -1,0 +1,50 @@
+/*
+
+Given a list of non-negative integers nums, arrange them such that they form the largest number and return it.
+
+Since the result may be very large, so you need to return a string instead of an integer.
+
+ 
+
+Example 1:
+
+Input: nums = [10,2]
+Output: "210"
+
+Example 2:
+
+Input: nums = [3,30,34,5,9]
+Output: "9534330"
+
+ 
+
+Constraints:
+
+    1 <= nums.length <= 100
+    0 <= nums[i] <= 109
+
+*/
+
+
+class Solution {
+public:
+    string largestNumber(vector<int>& nums) {
+        std::vector<std::string> string_nums(nums.size());
+
+        for (int i = 0; i < nums.size(); i++)
+            string_nums[i] = to_string(nums[i]);
+
+        sort(string_nums.begin(), string_nums.end(),
+             [](const string& a, const string& b) { return a + b < b + a; });
+
+        string solution;
+        for (const string& it : string_nums) {
+            solution = it + solution;
+        }
+
+        if (solution.empty() or solution[0] == '0')
+            return "0";
+
+        return solution;
+    }
+};
