@@ -42,7 +42,7 @@ public:
     MyCalendar() { empty_date.emplace(std::pair<uint32_t, uint32_t>(0, 1000000002)); empty_date.emplace(std::pair<uint32_t, uint32_t>(-1, 0));}
 
     bool book(int start, int end) {
-        std::map<uint32_t, uint32_t>::iterator d = std::prev(empty_date.upper_bound(start));
+        auto d = std::prev(empty_date.upper_bound(start));
         int first = d->first;
         int second = d->second;
 
@@ -57,8 +57,6 @@ public:
         return true;
     }
 };
-
-
 
 /**
  * Your MyCalendar object will be instantiated and called as such:
