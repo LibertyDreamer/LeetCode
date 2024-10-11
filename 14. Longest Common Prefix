@@ -1,0 +1,65 @@
+/*
+
+Write a function to find the longest common prefix string amongst an array of strings.
+
+If there is no common prefix, return an empty string "".
+
+ 
+
+Example 1:
+
+Input: strs = ["flower","flow","flight"]
+Output: "fl"
+
+Example 2:
+
+Input: strs = ["dog","racecar","car"]
+Output: ""
+Explanation: There is no common prefix among the input strings.
+
+ 
+
+Constraints:
+
+    1 <= strs.length <= 200
+    0 <= strs[i].length <= 200
+    strs[i] consists of only lowercase English letters.
+
+*/
+
+class Solution {
+public:
+    string longestCommonPrefix(vector<string>& strs) {
+        std::string longest_prefix;
+
+        for (int letter = 0;; ++letter) {
+            char ch = 0;
+            int word = 0;
+            if(word < strs.size())
+            {
+                if(letter < strs[word].size())
+                {
+                    ch = strs[word][letter];
+                }
+                else return longest_prefix;
+            }
+
+            for (word = 1; word < strs.size(); ++word) {
+                if(letter < strs[word].size())
+                {
+                    if(strs[word][letter] != ch) 
+                    {
+                        return longest_prefix;
+                    }
+                }
+                else return longest_prefix;
+            }
+
+           
+                longest_prefix.push_back(strs[0][letter]);
+            
+        }
+
+        return longest_prefix;
+    }
+};
