@@ -1,0 +1,70 @@
+/*
+
+You are given a positive integer n.
+
+A binary string x is valid if all
+substrings
+of x of length 2 contain at least one "1".
+
+Return all valid strings with length n, in any order.
+
+ 
+
+Example 1:
+
+Input: n = 3
+
+Output: ["010","011","101","110","111"]
+
+Explanation:
+
+The valid strings of length 3 are: "010", "011", "101", "110", and "111".
+
+Example 2:
+
+Input: n = 1
+
+Output: ["0","1"]
+
+Explanation:
+
+The valid strings of length 1 are: "0" and "1".
+
+ 
+
+Constraints:
+
+    1 <= n <= 18
+
+*/
+
+
+class Solution {
+public:
+    vector<string> validStrings(int n) {
+        std::vector<std::string> solution;
+        solution.push_back("0");
+        solution.push_back("1");
+
+        for(int i = 0; i < n-1; ++i)
+        {
+            int check_it = solution.size();
+
+            for(int j = 0; j < check_it; ++j)
+            {
+                if(solution[j][i] == '1')
+                {
+                    solution.push_back(solution[j]);
+                    solution.back().push_back('0');
+                    solution[j].push_back('1');
+                }
+                else
+                {
+                    solution[j].push_back('1');
+                }
+            }
+        }
+     
+        return solution;
+    }
+};
