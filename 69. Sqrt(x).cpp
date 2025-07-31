@@ -29,11 +29,12 @@ Constraints:
 class Solution {
 public:
     int mySqrt(int x) {
-        int size = 23170 / 2;
+        if(x > 2147395600) return 23170*2;
+        int size = 23170;
         int i = 23170;
 
         while (size > 0) {
-            int square = i * i;
+            unsigned long long square = i * i;
             if (square == x) {
                 return i;
             } else if (square > x) {
@@ -45,7 +46,8 @@ public:
         }
 
         while (i * i > x) i--;
-        while (((long long)i + 1) * ((long long)i + 1) <= x) i++;
+        while (((long long)i + 1) * ((long long)i + 1) < x) i++;
         return i;
     }
 };
+
