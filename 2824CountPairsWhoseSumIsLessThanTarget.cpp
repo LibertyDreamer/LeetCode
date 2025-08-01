@@ -34,7 +34,7 @@ Constraints:
 -50 <= nums[i], target <= 50
   */
 
-
+//bruteforce
 class Solution {
 public:
     int countPairs(vector<int>& nums, int target) {
@@ -49,5 +49,28 @@ public:
         }
 
         return pairs;
+    }
+};
+
+
+//smarter
+class Solution {
+public:
+    int countPairs(vector<int>& nums, int target) {
+        
+        std::sort(nums.begin(), nums.end());
+        int i = 0, j = nums.size()-1;
+        int valid_pairs = 0;
+        int sum;
+        while(i < j)
+        {
+            sum = nums[i] + nums[j];
+            if(sum < target){
+                valid_pairs += j-i;
+                i++;
+            }else if(sum >= target) j--;
+        }
+
+        return valid_pairs;
     }
 };
