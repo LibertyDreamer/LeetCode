@@ -32,30 +32,19 @@ Constraints:
 class Solution {
 public:
     int search(vector<int>& nums, int target) {
+        int left = 0, right = nums.size()-1, middle = nums.size()/2;
 
-        int left = 0, right = nums.size() - 1;
-
-        int mid = right / 2;
-
-        while (nums[mid] != target) {
-
-            mid = (right - left) / 2 + left;
-
-            if (mid == left or mid == right) {
-                if (nums[left] == target)
-                    return left;
-                if (nums[right] == target)
-                    return right;
-
-                return -1;
+        while(nums[middle] != target)
+        {
+            if(nums[middle] < target){
+                left = middle + 1;
+            }else if(nums[middle] > target){
+                right = middle - 1;
             }
-
-            if (nums[mid] > target)
-                right = mid - 1;
-            else
-                 left = mid + 1;
+            if(left > right) return -1;
+             middle = (right - left) / 2 + left;
         }
 
-        return mid;
+        return middle;
     }
 };
