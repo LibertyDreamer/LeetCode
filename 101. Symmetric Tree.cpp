@@ -42,7 +42,7 @@ public:
         left.push(root->left);
         right.push(root->right);
         
-        while (!left.empty() or !right.empty()) {
+        while (!left.empty() and !right.empty()) {
             TreeNode* l = left.front();
             left.pop();
             TreeNode* r = right.front();
