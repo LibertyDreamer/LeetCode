@@ -50,3 +50,33 @@ public:
         throw("WHAT?");
     }
 };
+
+
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        int n = nums.size();
+        std::vector<int> indexes(n);
+        std::iota(indexes.begin(), indexes.end(), 0);
+        std::sort(indexes.begin(), indexes.end(),
+                  [&](int a, int b) {
+                      return nums[a] < nums[b];
+                  });
+
+        int left = 0;
+        int right = n - 1;
+
+        while (true) {
+            int sum = nums[indexes[left]] + nums[indexes[right]];
+            if (sum == target) {
+                return {indexes[left], indexes[right]};
+            } else if (sum < target) {
+                ++left;
+            } else {
+                --right;
+            }
+        }
+
+        return {};
+    }
+};
