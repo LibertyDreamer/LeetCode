@@ -54,3 +54,33 @@ public:
         return solution;
     }
 };
+
+
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        std::unordered_map<int, int> m;
+
+        int max_freq = INT_MIN;
+        for (const int& num : nums) {
+            m[num]++;
+            max_freq = std::max(max_freq, m[num]);
+        }
+
+        std::vector<std::vector<int>> table(max_freq);
+        for (auto& num : m) {
+            table[num.second-1].push_back(num.first);
+        }
+
+        std::vector<int> solution;
+
+        for(int i = table.size()-1; i>-1; --i){
+            for(auto& it: table[i]){
+                if(solution.size() == k) return solution;
+                solution.push_back(it);
+            }
+        }
+        return solution;
+    }
+};
+
