@@ -39,26 +39,22 @@ Constraints:
 class Solution {
     int sum = 0;
 
-    void next_node(TreeNode* node, bool is_left)
+    void next_node(TreeNode* node)
     {
-        if(is_left)
-        {
-            if(!(node->left or node->right))
-            {
-                sum += node->val;
-            }
+
+        if(node->left){
+            if(node->left->left == nullptr and node->left->right == nullptr) sum+=node->left->val;
+            next_node(node->left);
         }
-        if(node->left)
-            next_node(node->left, true);
+            
             
         if(node->right)
-            next_node(node->right,false);
+            next_node(node->right);
     }
 
 public:
     int sumOfLeftLeaves(TreeNode* root) {
-        next_node(root, false);
-
+        next_node(root);
         return sum;
     }
 };
